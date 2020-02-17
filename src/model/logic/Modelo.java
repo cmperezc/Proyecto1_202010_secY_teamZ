@@ -11,7 +11,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
-import model.data_structures.IArregloDinamico;
+import model.data_structures.IlistaDoble;
+import model.data_structures.listaDoble;
 
 /**
  * Definicion del modelo del mundo
@@ -21,10 +22,8 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
+	private IlistaDoble datos;
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
-	//Pila<Comparendo> datos1 = new Pila<Comparendo>();
-	//Cola<Comparendo> datos2 = new Cola<Comparendo>();
 
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
@@ -36,9 +35,9 @@ public class Modelo {
 	 * @param tamano
 	 */
 
-	
-	public void cargarDatos(String PATH) throws java.text.ParseException {
 
+	public void cargarDatos(String PATH) throws java.text.ParseException {
+		datos = new listaDoble<>();
 		//TODO Cambiar la clase del contenedor de datos por la Estructura de Datos propia adecuada para resolver el requerimiento 
 		JsonReader reader;
 		try {
@@ -69,8 +68,6 @@ public class Modelo {
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
-				//datos1.push(c);
-				//datos2.enqueue(c);
 			}
 
 		} catch (FileNotFoundException | ParseException e) {
