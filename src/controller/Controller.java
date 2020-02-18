@@ -48,11 +48,10 @@ public class Controller {
 					e.printStackTrace();
 				}
 				long end = System.currentTimeMillis();
-// terminar
 				view.printMessage("Tiempo de carga (seg): " + (end-start)/1000.0);
 				view.printMessage("total de comparendos en el archivo: " + modelo.darTamano() + "\n");
 				view.printMessage("comparendo con mayor objectid " + modelo.comparendoMayorObje().toString3() + "\n");
-				view.printMessage("Ultimo dato cola: " + arreglo[0]+","+ arreglo[1] + "\n");
+				view.printMessage("zona Minimax: " + arreglo[0]+","+ arreglo[1] +","+ arreglo[2]+","+ arreglo[3]+ "\n");
 				break;
 
 			case 4:

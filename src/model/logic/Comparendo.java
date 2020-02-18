@@ -57,7 +57,7 @@ public class Comparendo {
 		return   infraccion +","+ objectId +","+  fecha_hora + "," + clase_vehi + "," + tipo_servi +"," + localidad;
 	}
 	public String toString3() {
-		return "," + objectId + ", " + fecha_hora + "," + "," + infraccion + "," + clase_vehi
+		return  objectId + ", " + fecha_hora + "," + "," + infraccion + "," + clase_vehi
 				+ "" + tipo_servi+ "," + localidad  ;
 	}
 
