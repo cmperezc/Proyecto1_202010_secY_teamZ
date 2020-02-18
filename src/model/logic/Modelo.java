@@ -11,7 +11,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
-import model.data_structures.IlistaDoble;
 import model.data_structures.listaDoble;
 
 /**
@@ -22,7 +21,7 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IlistaDoble datos;
+	private listaDoble<Comparendo> datos;
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
 
 	/**
@@ -36,8 +35,12 @@ public class Modelo {
 	 */
 
 
-	public void cargarDatos(String PATH) throws java.text.ParseException {
+	public double[] cargarDatos(String PATH) throws java.text.ParseException {
 		datos = new listaDoble<>();
+		double minLongitud =Double.MAX_VALUE;
+		double minLatitud =Double.MAX_VALUE;
+		double maxLongitud =Double.MIN_VALUE;
+		double maxLatitud =Double.MIN_VALUE;
 		//TODO Cambiar la clase del contenedor de datos por la Estructura de Datos propia adecuada para resolver el requerimiento 
 		JsonReader reader;
 		try {
@@ -68,12 +71,28 @@ public class Modelo {
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
+				datos.agregarfinal(c);
+				if (longitud<minLongitud) {
+					minLongitud = longitud;
+				}
+				if (latitud<minLatitud) {
+					minLatitud=latitud;
+				}
+				if (latitud>maxLatitud) {
+					maxLatitud=latitud;
+				}
+				if (longitud>maxLongitud) {
+					maxLongitud=longitud;
+				}
 			}
 
 		} catch (FileNotFoundException | ParseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		}	
+		}
+		
+		double[] coordenadas = {maxLongitud,maxLatitud, minLongitud,minLatitud};
+		return coordenadas;
 
 	}
 	/**
@@ -82,36 +101,25 @@ public class Modelo {
 	 */
 	public int darTamano()
 	{
-		return datos.darTamano();
+		return datos.darTamaño();
 	}
 
 	/**
 	 * Requerimiento de agregar dato
 	 * @param dato
 	 */
-	public void agregar(String dato)
+	public void agregar(Comparendo item)
 	{	
-		datos.agregar(dato);
+		datos.agregarInicio(item);
 	}
 
-	/**
-	 * Requerimiento buscar dato
-	 * @param dato Dato a buscar
-	 * @return dato encontrado
-	 */
-	public String buscar(String dato)
-	{
-		return datos.buscar(dato);
-	}
 
-	/**
-	 * Requerimiento eliminar dato
-	 * @param dato Dato a eliminar
-	 * @return dato eliminado
-	 */
-	public String eliminar(String dato)
-	{
-		return datos.eliminar(dato);
+	
+	public int TotalComparendos(){
+		return datos.darTamaño();
+	}
+	public Comparendo comparendoMayorObje(){
+		 return datos.darUltimoElemento();
 	}
 
 

@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class listaDoble<T> implements Iterable<T>,IlistaDoble {
+public class listaDoble<T> implements Iterable<T> {
 
 	private Nodo<T> inicio;
 	private Nodo<T> fin;
@@ -30,7 +30,7 @@ public class listaDoble<T> implements Iterable<T>,IlistaDoble {
 			tamaño++;
 		}else{
 			inicio = new Nodo<T>(item, null, null);  
-
+			tamaño++;
 		}
 	}
 	public void agregarfinal(T item){
@@ -41,7 +41,7 @@ public class listaDoble<T> implements Iterable<T>,IlistaDoble {
 			tamaño++;
 		}else{
 			fin = new Nodo<T>(item, null, null);  
-
+			tamaño++;
 		}
 	}
 
@@ -81,6 +81,9 @@ public class listaDoble<T> implements Iterable<T>,IlistaDoble {
 			}
 		}
 		return null;
+	}
+	public T darUltimoElemento(){
+		return fin.getItem();
 	}
 	
 	 private class ListIterator implements Iterator<T> {
