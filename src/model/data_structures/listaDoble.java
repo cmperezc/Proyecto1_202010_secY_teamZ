@@ -12,6 +12,7 @@ public class listaDoble<T> implements Iterable<T> {
 
 	public listaDoble(){
 		inicio=fin=null;
+	
 	}
 
 	public int darTamaño(){
@@ -36,11 +37,13 @@ public class listaDoble<T> implements Iterable<T> {
 	public void agregarfinal(T item){
 		Nodo<T> Nuevofinal = new Nodo<T> (item, null, fin);
 		if (!estaVacia()) {
+			
 			fin.cambiarSiguiente(Nuevofinal);
 			fin = Nuevofinal;
 			tamaño++;
 		}else{
 			fin = new Nodo<T>(item, null, null);  
+			inicio=fin;
 			tamaño++;
 		}
 	}
@@ -57,8 +60,10 @@ public class listaDoble<T> implements Iterable<T> {
 			//si no esta ni al principio ni al final
 		}else{
 			Nodo<T> aux=inicio.darSiguiente();
-			while (aux!=null) {
+			boolean f=true;
+			while (aux!=null && f ) {
 				if (aux.obtenerItem().equals(item)) {
+					f=false;
 					aux.darAnterior().cambiarSiguiente(aux.darSiguiente());
 					aux.darSiguiente().CambiarAnterior(aux.darAnterior());
 				}else{
@@ -73,16 +78,23 @@ public class listaDoble<T> implements Iterable<T> {
 	public T darElemento(int i){
 		Nodo<T> aux=inicio;
 		int apuntador=0;
+		
 		while (aux!=null) {
+			
 			if (apuntador == i) {
+				
 				return aux.obtenerItem();
 			}else{
 				aux = aux.darSiguiente();
 			}
+			apuntador++;
 		}
 		return null;
 	}
 	public T darUltimoElemento(){
+		if(tamaño==0){
+			return null;
+		}
 		return fin.getItem();
 	}
 	
