@@ -1,8 +1,10 @@
 package model.logic;
 
+
+
 import java.util.Date;
 
-public class Comparendo {
+public class Comparendo implements Comparable<Comparendo>{
 	private int objectId;
 	private Date fecha_hora;
 	private String des_infrac;
@@ -14,7 +16,7 @@ public class Comparendo {
 
 	private double latitud;
 	private double longitud;
-
+	
 	public Comparendo(int objeId, Date fecha, String descripcion, String detencion, String claseVeh, String tipoSer, String codInfraccion, String localidadP, double lonP, double latP)
 	{
 		objectId = objeId;
@@ -28,40 +30,7 @@ public class Comparendo {
 		longitud = lonP;
 		latitud = latP;
 	}
-	public int darObjectid(){
-		return objectId;
-
-	}
-	public Date darFecha(){
-		return fecha_hora;
-
-	}
-	public String darClaseVe(){
-		return clase_vehi;
-
-	}public String dartipoSer(){
-		return tipo_servi;
-
-	}public String darInfraccion(){
-		return infraccion;
-
-	}
-	public String darDescInfraccion(){
-		return des_infrac;
-
-	}public String darLocalidad(){
-		return localidad;
-
-	}
-	public String toString2() {
-		return   infraccion +","+ objectId +","+  fecha_hora + "," + clase_vehi + "," + tipo_servi +"," + localidad;
-	}
-	public String toString3() {
-		return  objectId + ", " + fecha_hora + "," + "," + infraccion + "," + clase_vehi
-				+ "" + tipo_servi+ "," + localidad  ;
-	}
-
-
+	
 	@Override
 	public String toString() {
 		return "Comparendo [OBJECTID=" + objectId + ", FECHA_HORA=" + fecha_hora + ", DES_INFRAC=" + des_infrac
@@ -70,4 +39,18 @@ public class Comparendo {
 				+ longitud + "]";
 	}
 
+	@Override
+	public int compareTo(Comparendo newComparendo) {
+		int a=-1;
+		if(this.fecha_hora.before(newComparendo.fecha_hora))
+			a=-1;
+		else if(this.fecha_hora.after(newComparendo.fecha_hora))
+			a=1;
+		else{
+			if(this.objectId>newComparendo.objectId)
+				a=1;
+		}
+		return a;
+	}
+	
 }
