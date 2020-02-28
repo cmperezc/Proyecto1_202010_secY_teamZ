@@ -30,7 +30,40 @@ public class Comparendo implements Comparable<Comparendo>{
 		longitud = lonP;
 		latitud = latP;
 	}
-	
+	public int darObjectid(){
+		return objectId;
+
+	}
+	public Date darFecha(){
+		return fecha_hora;
+
+	}
+	public String darClaseVe(){
+		return clase_vehi;
+
+	}public String dartipoSer(){
+		return tipo_servi;
+
+	}public String darInfraccion(){
+		return infraccion;
+
+	}
+	public String darDescInfraccion(){
+		return des_infrac;
+
+	}public String darLocalidad(){
+		return localidad;
+
+	}
+	public String toString2() {
+		return   infraccion +","+ objectId +","+  fecha_hora + "," + clase_vehi + "," + tipo_servi +"," + localidad;
+	}
+	public String toString3() {
+		return  objectId + ", " + fecha_hora + "," + "," + infraccion + "," + clase_vehi
+				+ "" + tipo_servi+ "," + localidad  ;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Comparendo [OBJECTID=" + objectId + ", FECHA_HORA=" + fecha_hora + ", DES_INFRAC=" + des_infrac

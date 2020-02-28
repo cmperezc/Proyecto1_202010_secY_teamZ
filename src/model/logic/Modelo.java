@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import model.data_structures.Nodo;
 import model.data_structures.listaDoble;
 
 /**
@@ -23,7 +24,8 @@ public class Modelo {
 	 */
 	private listaDoble<Comparendo> datos;
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
-
+	MergeSort me= new MergeSort();
+	Shell sh=new Shell();
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
@@ -41,6 +43,7 @@ public class Modelo {
 		double minLatitud =Double.MAX_VALUE;
 		double maxLongitud =Double.MIN_VALUE;
 		double maxLatitud =Double.MIN_VALUE;
+		
 		//TODO Cambiar la clase del contenedor de datos por la Estructura de Datos propia adecuada para resolver el requerimiento 
 		JsonReader reader;
 		try {
@@ -113,7 +116,45 @@ public class Modelo {
 		datos.agregarInicio(item);
 	}
 
-
+	public Comparendo Requerimiento1b(String comp){
+		Comparendo s=null;
+		int i=0;
+		Nodo<Comparendo> inicio= datos.darInicio();
+		while(i<datos.darTamaño()){
+			
+			if(inicio.getItem().darInfraccion().equals(comp)){
+				s=inicio.getItem();
+			}
+			inicio=inicio.darSiguiente();
+			}
+		return s;
+	}
+	public Comparendo[] Requrimiento2b(String comp){
+		Comparendo [] c=darArreglo(comp);
+		sh.sort(c);
+		return c;
+	}
+	
+	public Comparendo[] darArreglo(String comp){
+		int i=0;
+		Nodo<Comparendo> inicio= datos.darInicio();
+		while(!(inicio.darSiguiente()==null)){
+			if(inicio.obtenerItem().darInfraccion().equals(comp)){
+				i++;
+			}
+			inicio=inicio.darSiguiente();
+		}
+		Comparendo[] respuesta =new Comparendo[i];
+		
+		 inicio= datos.darInicio();
+		while(!(inicio.darSiguiente()==null)){
+			if(inicio.obtenerItem().darInfraccion().equals(comp)){
+				i++;
+			}
+			inicio=inicio.darSiguiente();
+		}
+		return respuesta;
+	}
 	
 	public int TotalComparendos(){
 		return datos.darTamaño();

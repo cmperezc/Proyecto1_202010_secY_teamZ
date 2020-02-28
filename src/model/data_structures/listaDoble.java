@@ -22,7 +22,9 @@ public class listaDoble<T> implements Iterable<T> {
 	public boolean estaVacia(){
 		return darTamaño() == 0;
 	}
-
+	public Nodo<T> darInicio(){
+		return inicio;
+	}
 	public void agregarInicio(T item){
 		Nodo<T> NuevoInicio = new Nodo<T> (item, inicio, null);
 		if (!estaVacia()) {
