@@ -1,10 +1,13 @@
+
 package model.logic;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,53 +16,41 @@ import com.google.gson.stream.JsonReader;
 
 import model.data_structures.Nodo;
 import model.data_structures.listaDoble;
+import model.logic.Comparendo;
 
 /**
  * Definicion del modelo del mundo
  *
  */
 public class Modelo {
-	/**
-	 * Atributos del modelo del mundo
-	 */
-	private listaDoble<Comparendo> datos;
+	
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
-	MergeSort me= new MergeSort();
-	Shell sh=new Shell();
-	/**
-	 * Constructor del modelo del mundo con capacidad predefinida
-	 */
-
-
-	/**
-	 * Constructor del modelo del mundo con capacidad dada
-	 * @param tamano
-	 */
-
-
-	public double[] cargarDatos(String PATH) throws java.text.ParseException {
-		datos = new listaDoble<>();
-		double minLongitud =Double.MAX_VALUE;
-		double minLatitud =Double.MAX_VALUE;
-		double maxLongitud =Double.MIN_VALUE;
-		double maxLatitud =Double.MIN_VALUE;
-		
+	//public static String PATH = "./data/comparendos_dei_2018.geojson";
+	public listaDoble<Comparendo> datos;
+	public Shell sh;
+	public MergeSort mg;
+	
+	public listaDoble<Comparendo> cargarDatos() {
+		sh=new Shell();
+		mg= new MergeSort();
 		//TODO Cambiar la clase del contenedor de datos por la Estructura de Datos propia adecuada para resolver el requerimiento 
+		datos = new listaDoble<Comparendo>();
+
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader(PATH));
 			JsonElement elem = JsonParser.parseReader(reader);
 			JsonArray e2 = elem.getAsJsonObject().get("features").getAsJsonArray();
-
-
+			
+			
 			SimpleDateFormat parser=new SimpleDateFormat("yyyy/MM/dd");
 
 			for(JsonElement e: e2) {
 				int OBJECTID = e.getAsJsonObject().get("properties").getAsJsonObject().get("OBJECTID").getAsInt();
-
+				
 				String s = e.getAsJsonObject().get("properties").getAsJsonObject().get("FECHA_HORA").getAsString();	
 				Date FECHA_HORA = parser.parse(s); 
-
+				
 				String MEDIO_DETE = e.getAsJsonObject().get("properties").getAsJsonObject().get("MEDIO_DETE").getAsString();
 				String CLASE_VEHI = e.getAsJsonObject().get("properties").getAsJsonObject().get("CLASE_VEHI").getAsString();
 				String TIPO_SERVI = e.getAsJsonObject().get("properties").getAsJsonObject().get("TIPO_SERVI").getAsString();
@@ -69,24 +60,13 @@ public class Modelo {
 
 				double longitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(0).getAsDouble();
-
+				
 				double latitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(1).getAsDouble();
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
 				datos.agregarfinal(c);
-				if (longitud<minLongitud) {
-					minLongitud = longitud;
-				}
-				if (latitud<minLatitud) {
-					minLatitud=latitud;
-				}
-				if (latitud>maxLatitud) {
-					maxLatitud=latitud;
-				}
-				if (longitud>maxLongitud) {
-					maxLongitud=longitud;
-				}
+				
 			}
 
 		} catch (FileNotFoundException | ParseException e) {
@@ -94,46 +74,33 @@ public class Modelo {
 			e.printStackTrace();
 		}
 		
-		double[] coordenadas = {maxLongitud,maxLatitud, minLongitud,minLatitud};
-		return coordenadas;
-
+		
+		return datos;	
+		
 	}
-	/**
-	 * Servicio de consulta de numero de elementos presentes en el modelo 
-	 * @return numero de elementos presentes en el modelo
-	 */
-	public int darTamano()
-	{
-		return datos.darTamaño();
-	}
-
-	/**
-	 * Requerimiento de agregar dato
-	 * @param dato
-	 */
-	public void agregar(Comparendo item)
-	{	
-		datos.agregarInicio(item);
-	}
-
 	public Comparendo Requerimiento1b(String comp){
 		Comparendo s=null;
 		int i=0;
 		Nodo<Comparendo> inicio= datos.darInicio();
-		while(i<datos.darTamaño()){
+		while(inicio.darSiguiente()!=null){
 			
 			if(inicio.getItem().darInfraccion().equals(comp)){
 				s=inicio.getItem();
+				
 			}
 			inicio=inicio.darSiguiente();
 			}
 		return s;
 	}
+	
+	
 	public Comparendo[] Requrimiento2b(String comp){
 		Comparendo [] c=darArreglo(comp);
-		sh.sort(c);
+		mg.sort(c,01
+				);
 		return c;
 	}
+
 	
 	public Comparendo[] darArreglo(String comp){
 		int i=0;
@@ -162,6 +129,13 @@ public class Modelo {
 	public Comparendo comparendoMayorObje(){
 		 return datos.darUltimoElemento();
 	}
-
-
+	public Comparable[]copiarComparendos(){
+		
+		Comparable[] c= new Comparable[datos.darTamaño()];
+		
+		for(int i=0;i<datos.darTamaño();i++ ){
+			c[i]=datos.darElemento(i);
+		}
+		return c;
+	}
 }

@@ -49,7 +49,7 @@ public class testMerge {
 		setUp1();
 
 		long start = System.currentTimeMillis();
-		me.sort(aleatorio);
+		me.sort(aleatorio,0);
 		long end = System.currentTimeMillis();
 
 		System.out.println("El Tiempo de ordenamiento Merge para "+N+" datos Aleatorio (seg): " + (end-start)/1000.0);
@@ -68,7 +68,7 @@ public class testMerge {
 	public void testoOrdenarAscendentes() {
 		setUp2();
 		long start = System.currentTimeMillis();
-		me.sort(ascendente);
+		me.sort(ascendente,0);
 		long end = System.currentTimeMillis();
 
 		System.out.println("El Tiempo de ordenamiento Merge para "+N+"  datos Ascendentes (seg): " + (end-start)/1000.0);
@@ -87,7 +87,7 @@ public class testMerge {
 	public void testoOrdenarDescendentes() {
 		setUp3();
 		long start = System.currentTimeMillis();
-		me.sort(descendente);
+		me.sort(descendente,0);
 		long end = System.currentTimeMillis();
 
 		System.out.println("El Tiempo de ordenamiento Merge para "+N+" datos Descendentes (seg): " + (end-start)/1000.0);

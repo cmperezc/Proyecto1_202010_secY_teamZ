@@ -2,7 +2,7 @@ package model.logic;
 
 public class MergeSort {
 	private static Comparable[] aux; 
-	public static void merge(Comparable[] a, int lo, int mid, int hi)
+	public static void merge(Comparable[] a, int lo, int mid, int hi,int lk)
 	{	
 		
 
@@ -17,14 +17,23 @@ public class MergeSort {
 				a[k] = aux[j++];
 			else if (j > hi )
 				a[k] = aux[i++];
-			else if (less(aux[j], aux[i]))
+			else if (less(aux[j], aux[i],lk))
 				a[k] = aux[j++];
 			else
 				a[k] = aux[i++];
 	}
-	private static boolean less(Comparable v, Comparable w)
+	private static boolean less(Comparable v, Comparable w, int lk)
 	{
-		return v.compareTo(w) < 0;
+		boolean f=false;
+		if(lk==0){
+			f= v.compareTo(w) < 0;	
+		}
+		else if(lk==1){
+			ComparatorInfraccion c= new ComparatorInfraccion();
+			f= c.compare((Comparendo)v,(Comparendo) w) <0;
+		}
+		return f;
+		
 	}
 	private static void exch(Comparable[] a, int i, int j)
 	{
@@ -32,18 +41,18 @@ public class MergeSort {
 		a[i] = a[j];
 		a[j] = t;
 	}
-	public static void sort(Comparable[] a) {
+	public static void sort(Comparable[] a,int lk) {
 		aux = new Comparable[a.length];
-		sort(a, 0, a.length - 1); 
+		sort(a, 0, a.length - 1,lk); 
 	}
 
-	private static void sort(Comparable[] a, int lo, int hi) {
+	private static void sort(Comparable[] a, int lo, int hi, int lk) {
 		if (hi <= lo) return; 
 		int mid = lo + (hi - lo)/2;
-		sort(a, lo, mid);
+		sort(a, lo, mid,lk);
 
-		sort(a, mid+1, hi);
+		sort(a, mid+1, hi,lk);
 
-		merge(a, lo, mid, hi);
+		merge(a, lo, mid, hi,lk);
 	} 
 }
