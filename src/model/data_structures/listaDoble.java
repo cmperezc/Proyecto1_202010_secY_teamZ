@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class listaDoble<T> implements Iterable<T> {
+public class listaDoble<T extends Comparable<T>> implements Iterable<T> {
 
 	private Nodo<T> inicio;
 	private Nodo<T> fin;
@@ -90,6 +90,20 @@ public class listaDoble<T> implements Iterable<T> {
 				aux = aux.darSiguiente();
 			}
 			apuntador++;
+		}
+		return null;
+	}
+	public T darElementoPorObjeto(T i){
+		Nodo<T> aux=inicio;
+		
+		while (aux!=null) {
+			
+			if (i.compareTo(aux.getItem())==0) {
+				
+				return aux.obtenerItem();
+			}else{
+				aux = aux.darSiguiente();
+			}
 		}
 		return null;
 	}

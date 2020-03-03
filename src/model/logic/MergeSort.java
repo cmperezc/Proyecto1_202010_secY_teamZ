@@ -29,7 +29,12 @@ public class MergeSort {
 			f= v.compareTo(w) < 0;	
 		}
 		else if(lk==1){
+			
 			ComparatorInfraccion c= new ComparatorInfraccion();
+			f= c.compare((Comparendo)v,(Comparendo) w) <0;
+		}
+		else if(lk==2){
+			ComparatorLocalidad c= new ComparatorLocalidad();
 			f= c.compare((Comparendo)v,(Comparendo) w) <0;
 		}
 		return f;
