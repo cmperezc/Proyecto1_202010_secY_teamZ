@@ -118,8 +118,29 @@ public class Controller {
 			case 7:
 				Comparendo[] c3= modelo.copiarComparendos();
 				ms.sort(c3, 1);
+				System.out.println("Infracciones --- Particular --- Publico");
+				String temp="";
+				int k=0;
+				int j=0;
 				for(int i=0;i<c3.length;i++){
-					System.out.println(c3[i].darInfraccion()+"  "+ c3[i].dartipoSer());
+					
+					if(c3[i].darInfraccion().equals(temp)){
+						if(c3[i].dartipoSer().equals("Publico")){
+						k=k+1;	
+						}else if(c3[i].dartipoSer().equals("Particular")){
+							j=j+1;
+						}
+						
+					}else if(i!=0){
+						System.out.println(c3[i-1].darInfraccion() +"--"+k+"--"+j);
+						if(c3[i].dartipoSer().equals("Publico")){
+							k=1;	
+							}else if(c3[i].dartipoSer().equals("Particular")){
+								j=1;
+							}
+						temp=c3[i].darInfraccion();
+								
+					}
 				}
 				break;
 			case 8:
@@ -161,9 +182,27 @@ public class Controller {
 			case 10:
 				Comparendo[] c8= modelo.copiarComparendos();
 				ms.sort(c8, 2);
-				String ant="";
-				for(int i=0;i<c8.length;i++){
-					
+				String ant=c8[1].darLocalidad();
+				int h1=1;
+				
+				for(int i=1;i<(c8.length-1);i++){
+					System.out.println(c8[i].darLocalidad());
+					if(c8[i+1].darLocalidad().equals(ant)){
+						h1=h1+1;
+						
+					}else {
+						int j1=h1/50;
+						
+						String y2= c8[i].darLocalidad()+"";
+						int con=0;
+						while(con<j1){
+							y2=y2+"*";
+							con=con+1;
+						}
+						System.out.println(y2);
+						ant=c8[i+1].darLocalidad();
+						h1=1;
+					}
 				}
 				break;
 			case 11:
